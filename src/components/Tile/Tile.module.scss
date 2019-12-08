@@ -1,0 +1,8 @@
+@import "../../scss/var.scss";
+
+:local(.tile) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: wheat;
+}
