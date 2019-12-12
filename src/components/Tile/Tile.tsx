@@ -1,18 +1,40 @@
 import React from "react";
 import styles from "./Tile.module.scss";
-import GridLayout from "react-grid-layout";
 
-type TileProps = {
-  data: GridLayout.Layout;
+import { Rnd, DraggableData, Position } from "react-rnd";
+import { TileDefinition, Id } from "../Track/Track";
+
+type Props = {
+  tile: TileDefinition;
+  onResize(tileUpdate: TileDefinition): void;
+  onRelocate(tileUpdate: Id & Position): void;
 };
 
-const Tile = ({ data }: TileProps) => {
-  console.log(data);
-
+const Tile = ({
+  tile: { id, x, y, width, height },
+  onRelocate,
+  onResize
+}: Props) => {
   return (
-    <div key={data.i} data-grid={data.i} style={{ backgroundColor: "wheat" }}>
-      {data.i}
-    </div>
+    <Rnd
+      size={{ width, height }}
+      position={{ x, y }}
+      onDragStop={(e, d: DraggableData) => {
+        console.log({ id, x: d.x, y: d.y });
+
+        onRelocate({ id, x: d.x, y: 0 });
+      }}
+      onResizeStop={(e, direction, ref, delta, position) => {
+        onResize({
+          id,
+          width: parseInt(ref.style.width || "0"),
+          height: parseInt(ref.style.height || "0"),
+          ...position
+        });
+      }}
+    >
+      <div className={styles.tile}>001</div>
+    </Rnd>
   );
 };
 
