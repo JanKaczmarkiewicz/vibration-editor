@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Track from "./components/Track/Track";
+import Backend from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
-import "./scss/global.scss";
-import "../node_modules/react-grid-layout/css/styles.css";
-import "../node_modules/react-resizable/css/styles.css";
-
-ReactDOM.render(<Track />, document.querySelector("#root"));
+ReactDOM.render(
+  <DndProvider backend={Backend}>
+    <Track />
+  </DndProvider>,
+  document.querySelector("#root")
+);
