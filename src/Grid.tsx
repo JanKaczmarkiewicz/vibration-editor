@@ -16,7 +16,8 @@ type GridState = { [key: string]: BoxDefinition };
 const Grid: React.FC = () => {
   const [boxes, setBoxes] = useState<GridState>({
     a: { left: 20, width: 40 },
-    b: { left: 100, width: 45 }
+    b: { left: 100, width: 45 },
+    c: { left: 200, width: 20 }
   });
 
   const handleDragOver = (e: React.SyntheticEvent) => {
@@ -24,12 +25,17 @@ const Grid: React.FC = () => {
   };
 
   const handleDrop = (e: React.DragEvent) => {
-    console.log(e.clientX, e.clientY);
-    const id = e.dataTransfer.getData("text");
-    const target = document.querySelector(`#${id}`);
-    if (target) {
-      console.log(target.getBoundingClientRect());
-    }
+    const [id, fromRaw] = e.dataTransfer.getData("text").split(",");
+    const to = e.clientX;
+    const from = parseInt(fromRaw);
+    const shift = to - from;
+    setBoxes({
+      ...boxes,
+      [id]: {
+        ...boxes[id],
+        left: boxes[id].left + shift
+      }
+    });
   };
 
   return (

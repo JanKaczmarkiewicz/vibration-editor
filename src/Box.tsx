@@ -11,8 +11,7 @@ const Box: React.FC<BoxDefinition & { id: string }> = ({ width, left, id }) => {
   const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     console.log(e.clientX, e.clientY);
 
-    e.dataTransfer.setData("text/plain", id);
-    console.log(e.dataTransfer);
+    e.dataTransfer.setData("text/plain", id + "," + e.clientX);
   };
   return (
     <div
