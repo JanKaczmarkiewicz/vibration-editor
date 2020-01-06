@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Box from "./Box";
+import { validateLayout } from "./utils/util";
 
 export interface BoxDefinition {
   left: number;
@@ -11,7 +12,7 @@ const style: React.CSSProperties = {
   background: "grey"
 };
 
-type GridState = { [key: string]: BoxDefinition };
+export type GridState = { [key: string]: BoxDefinition };
 
 const Grid: React.FC = () => {
   const [boxes, setBoxes] = useState<GridState>({
@@ -29,13 +30,18 @@ const Grid: React.FC = () => {
     const to = e.clientX;
     const from = parseInt(fromRaw);
     const shift = to - from;
-    setBoxes({
+
+    const newLayout = {
       ...boxes,
       [id]: {
-        ...boxes[id],
+        width: boxes[id].width,
         left: boxes[id].left + shift
       }
-    });
+    } as GridState;
+    const isValid = validateLayout(newLayout);
+    if (isValid) {
+      setBoxes(newLayout);
+    }
   };
 
   return (
