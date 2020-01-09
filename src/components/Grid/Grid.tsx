@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Box from "./Box";
-import { validateLayout } from "./utils/util";
+import Box from "../Box/Box";
+import { validateLayout } from "../../utils/util";
 
 export interface BoxDefinition {
   left: number;

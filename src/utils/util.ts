@@ -1,4 +1,4 @@
-import { GridState } from "../Grid";
+import { GridState } from "../components/Grid/Grid";
 
 type Range = {
   start: number;

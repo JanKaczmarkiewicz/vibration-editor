@@ -1,5 +1,5 @@
 import React from "react";
-import { BoxDefinition } from "./Grid";
+import { BoxDefinition } from "../Grid/Grid";
 
 const style: React.CSSProperties = {
   position: "absolute",
