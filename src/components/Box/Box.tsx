@@ -1,12 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
 import { BoxDefinition, onResize } from "../Grid/Grid";
+import { Resizable } from "re-resizable";
 
 const style: React.CSSProperties = {
-  position: "absolute",
-  height: 20,
-  background: "brown",
-  resize: "both",
-  overflow: "auto"
+  background: "brown"
 };
 
 type props = BoxDefinition & {
@@ -19,22 +16,18 @@ const Box: React.FC<props> = ({ width, height, left, id, onResize }) => {
     e.dataTransfer.setData("text/plain", id + "," + e.clientX);
   };
 
-  const resizeObserver = useRef(new ResizeObserver(([{ contentRect }]) => {}));
-
-  const initialSetup = (node: HTMLDivElement) => {
-    if (node) {
-      resizeObserver.current.observe(node);
-    }
+  const handleResize = (height: number, width: number) => {
+    onResize(id, width, height);
   };
 
   return (
     <div
-      ref={initialSetup}
-      id={id}
-      style={{ ...style, width, left, height }}
-      onDragStart={onDragStart}
       draggable
-    ></div>
+      onDragStart={onDragStart}
+      style={{ position: "absolute", left }}
+    >
+      <Resizable style={{ ...style, width, height }}>001</Resizable>
+    </div>
   );
 };
 

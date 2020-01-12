@@ -15,7 +15,8 @@ export interface onResize {
 
 const style: React.CSSProperties = {
   height: 50,
-  background: "grey"
+  background: "grey",
+  display: "flex"
 };
 
 const Grid: React.FC = () => {
@@ -29,7 +30,7 @@ const Grid: React.FC = () => {
     e.preventDefault();
   };
 
-  const updateBoxes = (
+  const updateBox = (
     id: string,
     update: { width?: number; height?: number; left?: number }
   ) => {
@@ -44,7 +45,9 @@ const Grid: React.FC = () => {
     }
   };
 
-  const handleChildResize: onResize = (id, height, width) => {};
+  const handleChildResize: onResize = (id, height, width) => {
+    updateBox(id, { height, width });
+  };
 
   const handleDrop = (e: React.DragEvent) => {
     const [id, fromRaw] = e.dataTransfer.getData("text").split(",");
@@ -53,16 +56,8 @@ const Grid: React.FC = () => {
     const shift = to - from;
 
     const position = ([...boxes].find(box => box.id === id)?.left || 0) + shift;
-    updateBoxes(id, { left: position });
+    updateBox(id, { left: position });
   };
-
-  useEffect(() => {
-    setBoxes([
-      { id: "a", left: 20, width: 40, height: 31 },
-      { id: "b", left: 100, width: 100, height: 100 },
-      { id: "c", left: 200, width: 20, height: 30 }
-    ]);
-  }, []);
 
   return (
     <div style={style} onDrop={handleDrop} onDragOver={handleDragOver}>
