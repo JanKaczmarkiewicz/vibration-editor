@@ -44,9 +44,7 @@ const Grid: React.FC = () => {
     }
   };
 
-  const handleChildResize: onResize = (id, height, width) => {
-    updateBoxes(id, { height, width });
-  };
+  const handleChildResize: onResize = (id, height, width) => {};
 
   const handleDrop = (e: React.DragEvent) => {
     const [id, fromRaw] = e.dataTransfer.getData("text").split(",");

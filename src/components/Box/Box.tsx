@@ -14,23 +14,12 @@ type props = BoxDefinition & {
   onResize: onResize;
 };
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue(value + 1); // update the state to force render
-}
-
 const Box: React.FC<props> = ({ width, height, left, id, onResize }) => {
-  const forceUpdate = useForceUpdate();
   const onDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData("text/plain", id + "," + e.clientX);
   };
 
-  const resizeObserver = useRef(
-    new ResizeObserver(([{ contentRect }]) => {
-      const { height, width } = contentRect;
-      onResize(id, height, width);
-    })
-  );
+  const resizeObserver = useRef(new ResizeObserver(([{ contentRect }]) => {}));
 
   const initialSetup = (node: HTMLDivElement) => {
     if (node) {
