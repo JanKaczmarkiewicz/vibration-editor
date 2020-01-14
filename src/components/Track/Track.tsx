@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BoxDefinition, RelocateHandler, ResizeHandler } from "../../types";
+import { BoxDefinition, BindedUpdateBox } from "../../types";
 
 import style from "./Track.module.scss";
 
@@ -30,24 +30,17 @@ const Track = () => {
     }
   };
 
-  const handleResize: ResizeHandler = (id, width, height) => {
-    updateBox(id, { width, height });
-  };
-
-  const handleRelocation: RelocateHandler = (id, left) => {
-    updateBox(id, { left });
-  };
-
   return (
     <div className={style.track}>
-      {boxes.map(box => (
-        <Tile
-          key={box.id}
-          tile={box}
-          onResize={handleResize}
-          onRelocate={handleRelocation}
-        />
-      ))}
+      {boxes.map(({ id, ...restProps }) => {
+        return (
+          <Tile
+            {...restProps}
+            key={id}
+            updateBox={updateBox.bind(null, id) as BindedUpdateBox}
+          />
+        );
+      })}
     </div>
   );
 };

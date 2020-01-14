@@ -1,21 +1,20 @@
-type Size = {
-  width: number | string;
-  height: number | string;
-};
-
-interface BoxDefinition {
+export type BoxDefinition = {
   id: string;
   left: number;
   width: number;
   height: number;
+};
+
+export type UpdateBoxData = {
+  left?: number;
+  width?: number;
+  height?: number;
+};
+
+export interface UpdateBox {
+  (id: string, updateBox: UpdateBoxData): void;
 }
 
-export interface ResizeHandler {
-  (id: string, width: number, height: number): void;
+export interface BindedUpdateBox {
+  (updateBox: UpdateBoxData): void;
 }
-
-export interface RelocateHandler {
-  (id: string, left: number): void;
-}
-
-export { BoxDefinition, Size };

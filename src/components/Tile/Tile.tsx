@@ -2,30 +2,31 @@ import React from "react";
 import style from "./Tile.module.scss";
 
 import { Rnd, RndResizeCallback, RndDragCallback } from "react-rnd";
-import { BoxDefinition, ResizeHandler, RelocateHandler } from "../../types";
+import { BindedUpdateBox } from "../../types";
 
 type Props = {
-  tile: BoxDefinition;
-  onResize: ResizeHandler;
-  onRelocate: RelocateHandler;
+  width: number;
+  height: number;
+  left: number;
+  updateBox: BindedUpdateBox;
 };
 
-const Tile = ({
-  tile: { id, left, width, height },
-  onRelocate,
-  onResize
-}: Props) => {
+const Tile = ({ left, width, height, updateBox }: Props) => {
   const onResizeStop: RndResizeCallback = (
     _event,
     _dir,
     ref,
     _delta,
-    _position
+    position
   ) => {
-    onResize(id, parseInt(ref.style.width), parseInt(ref.style.height));
+    const width = parseInt(ref.style.width);
+    const height = parseInt(ref.style.height);
+    const left = Math.round(position.x);
+    updateBox({ width, height, left });
   };
   const onDragStop: RndDragCallback = (_event, data) => {
-    onRelocate(id, data.x);
+    const left = data.x;
+    updateBox({ left });
   };
 
   return (
