@@ -12,19 +12,13 @@ type Props = {
 };
 
 const Tile = ({ left, width, height, updateBox }: Props) => {
-  const onResizeStop: RndResizeCallback = (
-    _event,
-    _dir,
-    ref,
-    _delta,
-    position
-  ) => {
+  const onResize: RndResizeCallback = (_event, _dir, ref, _delta, position) => {
     const width = parseInt(ref.style.width);
     const height = parseInt(ref.style.height);
     const left = Math.round(position.x);
     updateBox({ width, height, left });
   };
-  const onDragStop: RndDragCallback = (_event, data) => {
+  const onDrag: RndDragCallback = (_event, data) => {
     const left = data.x;
     updateBox({ left });
   };
@@ -33,8 +27,8 @@ const Tile = ({ left, width, height, updateBox }: Props) => {
     <Rnd
       size={{ width, height }}
       position={{ x: left, y: 0 }}
-      onDragStop={onDragStop}
-      onResizeStop={onResizeStop}
+      onDrag={onDrag}
+      onResize={onResize}
       dragAxis="x"
       bounds="parent"
       enableResizing={{
