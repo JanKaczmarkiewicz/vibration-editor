@@ -9,9 +9,10 @@ type Props = {
   height: number;
   left: number;
   updateBox: BindedUpdateBox;
+  isCollision: Boolean;
 };
 
-const Tile = ({ left, width, height, updateBox }: Props) => {
+const Tile = ({ left, width, height, updateBox, isCollision }: Props) => {
   const onResize: RndResizeCallback = (_event, _dir, ref, _delta, position) => {
     const width = parseInt(ref.style.width);
     const height = parseInt(ref.style.height);
@@ -42,7 +43,10 @@ const Tile = ({ left, width, height, updateBox }: Props) => {
         topLeft: false
       }}
     >
-      <div className={style.tile}></div>
+      <div
+        className={style.tile}
+        style={{ backgroundColor: isCollision ? "red" : "green" }}
+      ></div>
     </Rnd>
   );
 };

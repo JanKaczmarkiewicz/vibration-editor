@@ -13,7 +13,9 @@ const Track = () => {
     { id: "3", left: 55, width: 20, height: 20 },
     { id: "4", left: 100, width: 20, height: 20 }
   ];
-
+  const [boxCausingColision, setBoxCausingColision] = useState<null | string>(
+    null
+  );
   const [boxes, setBoxes] = useState<BoxDefinition[]>(initialState);
   // TODO: implement use validator Hook
 
@@ -26,8 +28,11 @@ const Track = () => {
     );
 
     if (validateLayout(newLayout)) {
+      boxCausingColision && setBoxCausingColision(null);
       setBoxes(newLayout);
+      return;
     }
+    id !== boxCausingColision && setBoxCausingColision(id);
   };
 
   return (
@@ -38,6 +43,7 @@ const Track = () => {
             {...restProps}
             key={id}
             updateBox={updateBox.bind(null, id) as BindedUpdateBox}
+            isCollision={id === boxCausingColision}
           />
         );
       })}
