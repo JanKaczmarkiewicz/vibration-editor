@@ -37,6 +37,7 @@ const Tile = ({
   const styles: CSSProperties = {};
   if (current) {
     styles.backgroundColor = current.isColliding ? "red" : "green";
+    styles.opacity = 0.5;
   }
 
   return (
