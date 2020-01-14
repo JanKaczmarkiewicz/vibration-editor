@@ -15,6 +15,11 @@ export interface UpdateBox {
   (id: string, updateBox: UpdateBoxData): void;
 }
 
+export type CurrentBox = {
+  id: null | string;
+  isColliding: boolean;
+};
+
 export interface BindedUpdateBox {
   (updateBox: UpdateBoxData): void;
 }

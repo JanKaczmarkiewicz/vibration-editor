@@ -1,18 +1,28 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import style from "./Tile.module.scss";
 
 import { Rnd, RndResizeCallback, RndDragCallback } from "react-rnd";
-import { BindedUpdateBox } from "../../types";
+import { BindedUpdateBox, CurrentBox } from "../../types";
 
 type Props = {
   width: number;
   height: number;
   left: number;
   updateBox: BindedUpdateBox;
-  isCollision: Boolean;
+  current: null | CurrentBox;
+  onTouchEnd: () => void;
+  onTouchStart: () => void;
 };
 
-const Tile = ({ left, width, height, updateBox, isCollision }: Props) => {
+const Tile = ({
+  left,
+  width,
+  height,
+  updateBox,
+  current,
+  onTouchEnd,
+  onTouchStart
+}: Props) => {
   const onResize: RndResizeCallback = (_event, _dir, ref, _delta, position) => {
     const width = parseInt(ref.style.width);
     const height = parseInt(ref.style.height);
@@ -24,12 +34,22 @@ const Tile = ({ left, width, height, updateBox, isCollision }: Props) => {
     updateBox({ left });
   };
 
+  const styles: CSSProperties = {};
+  if (current) {
+    styles.backgroundColor = current.isColliding ? "red" : "green";
+  }
+
   return (
     <Rnd
+      style={current ? { zIndex: 1000 } : {}}
       size={{ width, height }}
       position={{ x: left, y: 0 }}
       onDrag={onDrag}
       onResize={onResize}
+      onDragStart={onTouchStart}
+      onResizeStart={onTouchStart}
+      onDragStop={onTouchEnd}
+      onResizeStop={onTouchEnd}
       dragAxis="x"
       bounds="parent"
       enableResizing={{
@@ -43,10 +63,7 @@ const Tile = ({ left, width, height, updateBox, isCollision }: Props) => {
         topLeft: false
       }}
     >
-      <div
-        className={style.tile}
-        style={{ backgroundColor: isCollision ? "red" : "green" }}
-      ></div>
+      <div className={style.tile} style={styles}></div>
     </Rnd>
   );
 };
