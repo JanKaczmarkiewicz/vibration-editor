@@ -30,7 +30,7 @@ const isColliding = (firstRange: Range, secondRange: Range) => {
   return false;
 };
 
-const isCollisionIn = (layouts: BoxDefinition[]): boolean => {
+const isCollisionInLayout = (layouts: BoxDefinition[]): boolean => {
   const ranges = layouts.map(({ left, width }) =>
     range({
       start: left,
@@ -51,6 +51,6 @@ const isCollisionIn = (layouts: BoxDefinition[]): boolean => {
 };
 
 export const validateLayout = (layouts: BoxDefinition[]): boolean => {
-  const areCollisions = isCollisionIn(layouts);
+  const areCollisions = isCollisionInLayout(layouts);
   return !areCollisions;
 };

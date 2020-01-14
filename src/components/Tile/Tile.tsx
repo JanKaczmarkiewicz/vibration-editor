@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Tile.module.scss";
+import style from "./Tile.module.scss";
 
 import { Rnd, RndResizeCallback, RndDragCallback } from "react-rnd";
 import { BoxDefinition, ResizeHandler, RelocateHandler } from "../../types";
@@ -15,10 +15,16 @@ const Tile = ({
   onRelocate,
   onResize
 }: Props) => {
-  const onResizeStop: RndResizeCallback = (e, dir, ref, delta, position) => {
+  const onResizeStop: RndResizeCallback = (
+    _event,
+    _dir,
+    ref,
+    _delta,
+    _position
+  ) => {
     onResize(id, parseInt(ref.style.width), parseInt(ref.style.height));
   };
-  const onDragStop: RndDragCallback = (event, data) => {
+  const onDragStop: RndDragCallback = (_event, data) => {
     onRelocate(id, data.x);
   };
 
@@ -29,8 +35,19 @@ const Tile = ({
       onDragStop={onDragStop}
       onResizeStop={onResizeStop}
       dragAxis="x"
+      bounds="parent"
+      enableResizing={{
+        top: false,
+        right: true,
+        bottom: true,
+        left: true,
+        topRight: false,
+        bottomRight: false,
+        bottomLeft: false,
+        topLeft: false
+      }}
     >
-      <div className={styles.tile}>001</div>
+      <div className={style.tile}></div>
     </Rnd>
   );
 };

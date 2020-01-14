@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import Tile from "../Tile/Tile";
 import { BoxDefinition, RelocateHandler, ResizeHandler } from "../../types";
+
+import style from "./Track.module.scss";
+
+import Tile from "../Tile/Tile";
 import { validateLayout } from "../../utils/utils";
 
 const Track = () => {
@@ -22,9 +25,7 @@ const Track = () => {
       id === box.id ? { ...box, ...update } : box
     );
 
-    const isValid = validateLayout(newLayout);
-
-    if (isValid) {
+    if (validateLayout(newLayout)) {
       setBoxes(newLayout);
     }
   };
@@ -38,7 +39,7 @@ const Track = () => {
   };
 
   return (
-    <div>
+    <div className={style.track}>
       {boxes.map(box => (
         <Tile
           key={box.id}
