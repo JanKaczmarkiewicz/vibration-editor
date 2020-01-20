@@ -13,7 +13,11 @@ type Props = {
   onTouchEnd: () => void;
   onTouchStart: () => void;
 };
-
+/**
+ * Component that is build on top of library react-rnd.
+ * It produces a box that can be resizable and movable.
+ * @param Props
+ */
 const Tile = ({
   left,
   width,
@@ -24,8 +28,8 @@ const Tile = ({
   onTouchStart
 }: Props) => {
   const onResize: RndResizeCallback = (_event, _dir, ref, _delta, position) => {
-    const width = parseInt(ref.style.width);
-    const height = parseInt(ref.style.height);
+    const width = Number.parseInt(ref.style.width);
+    const height = Number.parseInt(ref.style.height);
     const left = Math.round(position.x);
     updateBox({ width, height, left });
   };
@@ -37,7 +41,7 @@ const Tile = ({
   const styles: CSSProperties = {};
   if (current) {
     styles.backgroundColor = current.isColliding ? "red" : "green";
-    styles.opacity = 0.5;
+    styles.opacity = 0.7;
   }
 
   return (
